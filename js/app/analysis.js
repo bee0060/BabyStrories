@@ -11,6 +11,8 @@
 
 
  /* baidu analysis */
+ /*
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F3fe1382df650c13fdd070ed31859df9c' type='text/javascript'%3E%3C/script%3E"));
 
+*/
