@@ -1,0 +1,28 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+    <div>
+        <dl id="storyContainer">
+            <dt id="storyCapter">
+                 
+            </dt>             
+        </dl>
+        <a id="backToListLink" href="../stories.html">返回列表</a>
+        <a id="nextPage" href="javascript:void(0);">下一页</a>
+    </div>
+    <script type="text/javascript" src="../../js/app/analysis.js"></script>
+    <script type="text/javascript" src="../../js/lib/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="../../js/app/storiesLoader.js"></script>
+    <script type="text/javascript" src="../../js/storiesData/threepigs.json"></script>
+    <script type=text/javascript>
+        $(document).ready(function () {
+            storiesLoader.initial(threepigs);
+        });
+    </script>
+</body>
+</html>
