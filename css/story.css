@@ -1,0 +1,33 @@
+.storyContainer 
+{ 
+	float:left;
+	height:300px; 
+	margin:0px;
+	overflow: hidden;
+	padding-left: 30px;
+	width:40%;
+}	
+
+.storyContainer dl
+{
+	min-height: 250px;
+}
+
+.storyContainer dl dt
+{	
+	font-size: 14pt;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+
+.illustrationContainer
+{
+	border:dotted 2px brown;
+	float:left;
+	height:300px;
+	line-height: 300px;
+	margin:0px;
+	text-align:center;
+	vertical-align:middle;
+	width:40%;
+}
