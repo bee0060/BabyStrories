@@ -10,6 +10,10 @@ var storiesLoader = (function () {
         index = index || DEFAULT_INDEX;
         culture = culture || DEFAULT_CULTURE;
 
+        loadPage(storyObj, index, culture);
+    }
+
+    var loadPage = function(storyObj, index, culture){
         var name = storyObj.name[culture],
             chapterCount = storyObj.chapters.length,
             chapterObj = storyObj.chapters[index],
@@ -19,28 +23,46 @@ var storiesLoader = (function () {
             storyContainer = $('#storyContainer'),
             nextPage = $('#nextPage');
 
-        $('title').html(name);
-        $('#storyCapter').text(name + "-" + number);
+        setTitle(name);
+        setChapterName(name, number);
+        setContent(contentArr);
+        setNextButton(chapterCount, index, function () {
+                loadPage(storyObj, +index + 1, culture);
+            });
+    };
+
+
+    var setTitle = function(title){
+        $('title').html(title);
+    }
+
+    var setChapterName = function(storyName, charpterIndex){
+        $('#storyCapter').text(storyName + "-" + charpterIndex);
+    }
+
+    var setContent = function(contents){
+         var contentLength = contents.length,
+            storyContainer = $('#storyContainer'),
+            frag = document.createDocumentFragment();
 
         storyContainer.find('dd').remove();
-        var frag = document.createDocumentFragment();
-
-
+        
         for (var i = 0; i < contentLength; i++) {
             var dd = document.createElement("dd");
-            dd.innerHTML = contentArr[i];
+            dd.innerHTML = contents[i];
             frag.appendChild(dd);
         }
         storyContainer.append(frag);
+    }
 
+    var setNextButton = function(chapterCount, index, clickEvent){
+        var nextPage = $('#nextPage');
         if (index == chapterCount - 1) {
             nextPage.hide();
         }
         else {
             nextPage.show();
-            nextPage[0].onclick = function () {
-                initial(storyObj, +index + 1, culture);
-            };
+            nextPage[0].onclick = clickEvent;
         }
     }
 
