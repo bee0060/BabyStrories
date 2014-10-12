@@ -19,13 +19,14 @@ var storiesLoader = (function () {
             chapterObj = storyObj.chapters[index],
             number = chapterObj.number,
             contentArr = chapterObj.content[culture],
+            illSrc = chapterObj.img,
             contentLength = contentArr.length,
-            storyContainer = $('#storyContainer'),
             nextPage = $('#nextPage');
 
         setTitle(name);
         setChapterName(name, number);
         setContent(contentArr);
+        setIllustration(illSrc);
         setNextButton(chapterCount, index, function () {
                 loadPage(storyObj, +index + 1, culture);
             });
@@ -53,6 +54,11 @@ var storiesLoader = (function () {
             frag.appendChild(dd);
         }
         storyContainer.append(frag);
+    }
+
+    var setIllustration = function(illSrc){
+        var illustrationContainer = $('.illustrationContainer');
+        illustrationContainer.css('background-image',"url('"+illSrc+"')");
     }
 
     var setNextButton = function(chapterCount, index, clickEvent){
