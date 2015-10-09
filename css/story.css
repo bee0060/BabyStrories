@@ -1,7 +1,7 @@
 .storyContainer 
 { 
 	float:left;
-	height:300px; 
+	height:350px; 
 	margin:0px;
 	overflow: hidden;
 	padding-left: 30px;
@@ -18,6 +18,10 @@
 	font-size: 14pt;
 	font-weight: bold;
 	margin-bottom: 15px;
+}
+
+.storyContainer >div {
+	margin-bottom: 10px;
 }
 
 .illustrationContainer

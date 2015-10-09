@@ -1,9 +1,11 @@
-var storiesLoader = (function () {
+'use strict';
+
+var storiesLoader = (function() {
     var DEFAULT_INDEX = 0,
         DEFAULT_CULTURE = 'cn';
-    
 
-    var initial = function (storyObj, index, culture) {
+
+    var initial = function(storyObj, index, culture) {
         if (typeof storyObj != "object") {
             return false;
         }
@@ -11,66 +13,79 @@ var storiesLoader = (function () {
         culture = culture || DEFAULT_CULTURE;
 
         loadPage(storyObj, index, culture);
-    }
+    };
 
-    var loadPage = function(storyObj, index, culture){
+    var loadPage = function(storyObj, index, culture) {
         var name = storyObj.name[culture],
             chapterCount = storyObj.chapters.length,
             chapterObj = storyObj.chapters[index],
             number = chapterObj.number,
             contentArr = chapterObj.content[culture],
             illSrc = chapterObj.img,
-            contentLength = contentArr.length,
-            nextPage = $('#nextPage');
+            contentLength = contentArr.length;
 
         setTitle(name);
         setChapterName(name, number);
         setContent(contentArr);
         setIllustration(illSrc);
-        setNextButton(chapterCount, index, function () {
-                loadPage(storyObj, +index + 1, culture);
-            });
+        setPrevButton(chapterCount, index, function() {
+            loadPage(storyObj, index - 1, culture);
+        });
+        setNextButton(chapterCount, index, function() {
+            loadPage(storyObj, +index + 1, culture);
+        });
     };
 
 
-    var setTitle = function(title){
+    var setTitle = function(title) {
         $('title').html(title);
-    }
+    };
 
-    var setChapterName = function(storyName, charpterIndex){
+    var setChapterName = function(storyName, charpterIndex) {
         $('#storyCapter').text(storyName + "-" + charpterIndex);
-    }
+    };
 
-    var setContent = function(contents){
-         var contentLength = contents.length,
+    var setContent = function(contents) {
+        var contentLength = contents.length,
             storyContainer = $('#storyContainer'),
             frag = document.createDocumentFragment();
 
         storyContainer.find('dd').remove();
-        
+
         for (var i = 0; i < contentLength; i++) {
             var dd = document.createElement("dd");
             dd.innerHTML = contents[i];
             frag.appendChild(dd);
         }
         storyContainer.append(frag);
-    }
+    };
 
-    var setIllustration = function(illSrc){
+    var setIllustration = function(illSrc) {
         var illustrationContainer = $('.illustrationContainer');
-        illustrationContainer.css('background-image',"url('"+illSrc+"')");
-    }
+        illustrationContainer.css('background-image', "url('" + illSrc + "')");
+    };
 
-    var setNextButton = function(chapterCount, index, clickEvent){
-        var nextPage = $('#nextPage');
-        if (index == chapterCount - 1) {
-            nextPage.hide();
+    var setPrevButton = function(chapterCount, index, clickEvent) {
+        var prevPage = $('#prevPage');
+        if (index === 0) {
+            prevPage.hide();
+        } else {
+            prevPage.show();
+            prevPage[0].onclick = clickEvent;
         }
-        else {
+    };
+
+    var setNextButton = function(chapterCount, index, clickEvent) {
+        var nextPage = $('#nextPage');
+        if (index === chapterCount - 1) {
+            nextPage.hide();
+        } else {
             nextPage.show();
             nextPage[0].onclick = clickEvent;
         }
-    }
+    };
 
-    return { initial: initial };
+    return {
+        initial: initial
+    };
 })();
