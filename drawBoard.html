@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  data-ng-app="drawBoard">
 <head>
 	<meta charset="UTF-8">
 	<title>Draw Board</title>
+
+	<link rel="stylesheet" type="text/css" href="css/board.css">
 </head>
-<body>
+<body ng-controller="drawBoardCtrl">
 	
+	<ul class="blockes">
+		<li class="block {{b ? 'block-selected' : ''}}" 
+			ng-repeat="b in blockes track by $index"
+			ng-click="selectBlock(blockes, $index)"
+			></li>
+	</ul>
 
-	
-
-	<script type="text/javascript" src="js/app/analysis.js"></script>
-    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+     
+	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/app/drawBoard.js"></script>
 </body>
 </html>

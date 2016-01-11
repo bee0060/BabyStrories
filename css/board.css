@@ -1,0 +1,21 @@
+.blockes {
+	border: 1px solid #000;
+	box-sizing: border-box;
+	height: 496px;
+	padding: 3px;
+	width: 496px;
+}
+
+.block {
+	border: 3px solid #000;
+	box-sizing: border-box;
+	display: block;
+	float: left;
+	height: 50px;
+	margin: 2px;
+	width: 50px;
+}
+
+.block-selected {
+	background-color: gray;
+}
