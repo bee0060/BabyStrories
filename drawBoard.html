@@ -7,15 +7,56 @@
 	<link rel="stylesheet" type="text/css" href="css/board.css">
 </head>
 <body ng-controller="drawBoardCtrl">
-	
-	<ul class="blockes">
-		<li class="block {{b ? 'block-selected' : ''}}" 
+	<dl class="stack pull-left">
+		<dt class="stack-title">Template</dt>
+		<dd class="stack-ele" 
+			ng-class="{'stack-ele-selected': $index === templateIndex }"
+			ng-repeat="t in templates track by $index"
+			ng-click="selectTemplate(t, $index)">{{t.name}}</dd>
+	</dl>
+
+	<dl class="stack pull-left">
+		<dt class="stack-title">Flag Stack</dt>
+		<dd class="stack-ele" 
+			ng-class="{'ele-selected': $index === flagIndex }"
+			ng-repeat="flag in flagStack track by $index"
+			ng-click="selectFlag($index)"></dd>
+	</dl>
+
+	<ul class="blockes pull-left">
+		<li class="block" 
 			ng-repeat="b in blockes track by $index"
 			ng-click="selectBlock(blockes, $index)"
-			></li>
+			ng-class="{ 'block-selected' : b == 1 }"
+			>
+		</li>
 	</ul>
 
-     
+	<div class="configs-field pull-left">
+		<span>Interval</span>
+		<input class="config-text" type="text" ng-model="interval">
+		<br>
+		<span>Stack length: </span>
+		<input class="config-text" type="text" ng-model="flagStack.length">
+		<br>
+		<span>Stack content: </span>
+		<textarea class="config-textarea" ng-model="zipped"></textarea>
+	</div>
+
+	<div class="ctrl-field clearfix">
+		<button class="btn" ng-click="resetBlockes()">reset</button>
+		<button class="btn" ng-show="flagIndex !== null" ng-click="newFlag()">new</button>
+		<button class="btn" ng-click="saveFlag(blockes, flagIndex)">save</button>
+		<button class="btn" ng-show="flagIndex !== null" ng-click="copyFlag()">copy</button>
+		<button class="btn" ng-hide="playing" ng-click="play()">play</button>
+		<button class="btn" ng-show="playing" ng-click="stop()">stop</button>
+		<br>
+		<button class="btn" ng-click="zipAndExport()">Zip & Export</button>
+		<button class="btn" ng-click="unzipAndImport(zipped)">Unzip & Import</button>
+		
+	</div>
+
+
 	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/app/drawBoard.js"></script>
 </body>
