@@ -10,8 +10,8 @@ drawBoard.controller('drawBoardCtrl', function($scope, $interval) {
 	$scope.flagIndex = null;
 	$scope.templates = [{
 		name: 'sample',
-		content: 'g1020000000000000,01020400000000000,g1020000000000000,01020400000000000,',
-		interval: 150
+		content: '00000000g00000000,000000s1810000000,0000v12242g200000,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,',
+		interval: 300
 	}];
 	$scope.templateIndex  = null;
 	$scope.flagStack = [];
@@ -159,7 +159,7 @@ drawBoard.controller('drawBoardCtrl', function($scope, $interval) {
 				unzippedStr = '',
 				temp = '';
 			for (var j = 0, jLen = chars.length; j < jLen; j++) {
-				unzippedStr += padLeft(unzipByBit(chars[j]), 5);
+				unzippedStr += padLeft(unzipByBit(chars[j]), 5, 0);
 			}
 			unzippedStr = unzippedStr.substr(0, 81);
 			flag.push(unzippedStr.split(''));

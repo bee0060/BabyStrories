@@ -18,7 +18,7 @@
 	<dl class="stack pull-left">
 		<dt class="stack-title">Flag Stack</dt>
 		<dd class="stack-ele" 
-			ng-class="{'ele-selected': $index === flagIndex }"
+			ng-class="{'stack-ele-selected': $index === flagIndex }"
 			ng-repeat="flag in flagStack track by $index"
 			ng-click="selectFlag($index)"></dd>
 	</dl>
