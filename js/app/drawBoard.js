@@ -10,10 +10,10 @@ drawBoard.controller('drawBoardCtrl', function($scope, $interval) {
 	$scope.flagIndex = null;
 	$scope.templates = [{
 		name: 'sample',
-		content: '00000000g00000000,000000s1810000000,0000v12242g200000,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,',
+		content: '00000000g00000000,000000s1810000000,0000v12242g200000,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i142848ge000,6ovr4u1s3o6ooh0s0,00dh4i15q948ge000,6ovr4u1trp6qoh0s0,00dh4i15q948ge000,6ovrvvvvvvuvov0s0,',
 		interval: 300
 	}];
-	$scope.templateIndex  = null;
+	$scope.templateIndex = null;
 	$scope.flagStack = [];
 	$scope.blockes = [];
 	$scope.playing = false;
@@ -25,6 +25,11 @@ drawBoard.controller('drawBoardCtrl', function($scope, $interval) {
 
 	(function() {
 		$scope.blockes = initalBlockes();
+		$scope.flagStack.push($scope.blockes);
+		$scope.flagIndex = 0;
+
+		$scope.newTemplate = newTemplate;
+
 		$scope.selectBlock = selectBlock;
 		$scope.resetBlockes = resetBlockes;
 		$scope.newFlag = newFlag;
@@ -144,10 +149,9 @@ drawBoard.controller('drawBoardCtrl', function($scope, $interval) {
 	}
 
 	function unzipAndImport(str) {
-		if(!str){
+		if (!str) {
 			return false;
 		}
-
 
 		var flag = [],
 			zipped = str.replace(/,$/, ''),
@@ -180,12 +184,26 @@ drawBoard.controller('drawBoardCtrl', function($scope, $interval) {
 		unzipAndImport(template.content);
 		$scope.templateIndex = index;
 		$scope.interval = template.interval;
-		console.log($scope.templateIndex);
+		console.log($scope.templateIndex, $scope.flagStack.length);
+	}
+
+	function newTemplate() {
+		var newTemplateName = prompt('Your new template name:', 'aa');
+
+		$scope.templates.push({
+			name: newTemplateName,
+			content: '',
+			interval: 500
+		});
+
+		$scope.blockes = initalBlockes();
+		$scope.flagStack = [$scope.blockes];
+		$scope.flagIndex = 0;
 	}
 
 
 
-	// common functions
+	/************* common functions ***********************/
 	function padLeft(str, len, char) {
 		var result = str,
 			originLen = str.length,

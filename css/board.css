@@ -65,8 +65,7 @@ body {
 	margin-bottom: 14px;
 }
 
-.stack-ele {
-	background-color: #878080;
+.stack-ele { 
 	border: 3px solid #000;
 	box-sizing: border-box;
 	display: block;
