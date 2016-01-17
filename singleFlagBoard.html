@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Single Flag Board</title>
+
+	<link rel="stylesheet" type="text/css" href="css/singleFlagBoard.css">
+</head>
+<body>
+	<div class="control-panel">
+		<dl class="config">
+			<dt>Configuration</dt>
+			<dd>Size: <input id="txtWidth" type="tel">*<input id="txtHeight" type="tel"> </dd>
+			<dd>Block Size: <input id='txtSize' type="text"></dd>
+			<dd>Background-color: <input type="text"></dd>
+			<dd><button onclick="bootStrap();">Bootstrap</button></dd>
+		</dl>
+
+		<dl class="painting-tools">
+			<dt>Painting Toos</dt>
+			<dd><input name="paint" type="radio" onclick="usePen()">Pen</dd>
+			<dd><input name="paint" type="radio">Selector</dd>
+		</dl>
+	</div>
+
+
+	<div class="board">
+		
+	</div>
+
+	
+    <script type="text/javascript" src="js/lib/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/app/singleFlagBoard.js"></script>
+</body>
+</html>
