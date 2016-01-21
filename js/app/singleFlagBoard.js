@@ -3,8 +3,6 @@ var enablePen = false,
 	usingPen = false;
 
 function bootStrap() {
-	// body...
-
 	var board = $('.board'),
 		txtWidth = $('#txtWidth'),
 		txtHeight = $('#txtHeight'),
@@ -16,15 +14,12 @@ function bootStrap() {
 		frag = document.createDocumentFragment(),
 		span;
 
-	console.log(width, height, count);
-
 	for (var i = 0; i < count; i++) {
 		span = document.createElement('span');
 		span.style.width = size + 'px';
 		span.style.height = size + 'px';
 		frag.appendChild(span);
 	}
-
 
 	board.hide();
 	board.html('');
@@ -34,7 +29,6 @@ function bootStrap() {
 	board.show();
 
 	board.on('click', 'span', selectBlock);
-
 }
 
 function selectBlock(ev, select) {
@@ -51,13 +45,11 @@ function usePen(ev) {
 	enablePen = true;
 	enableSelector = false;
 
-
 	$('.board').off('mousemove');
 
 	$('.board').on('click', 'span', function(ev) {
 		usingPen = !usingPen;
-		event.preventDefault();
-		event.stopPropagation();
+		selectBlock.call(this, ev);
 	});
 
 	$('.board').on('mousemove', 'span', function(ev) {
@@ -65,4 +57,31 @@ function usePen(ev) {
 			selectBlock.call(this, ev, true);
 		}
 	});
+}
+
+function exportInfo() {
+	var board = $('.board'),
+		txtWidth = $('#txtWidth'),
+		txtHeight = $('#txtHeight'),
+		txtSize = $('#txtSize'),
+		output = $('.output'),
+		width = txtWidth.val(),
+		height = txtHeight.val(),
+		size = txtSize.val(),
+		count = width * height,
+		infoArr = [],
+		result = width + '-' + height + '-' + size + ':';
+
+	board.find('span').each(function(i, span) {
+		console.log(i, span);
+		infoArr.push(span.className ? 1 : 0);
+	});
+	console.log(infoArr.join());
+	result += infoArr.join();
+
+	output.val(result);
+}
+
+function importInfo(str){
+	
 }

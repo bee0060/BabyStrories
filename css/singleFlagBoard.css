@@ -1,12 +1,13 @@
 .control-panel{
 	float: left;
-	width: 200px;
+	width: 250px;
 }
 
 .config, .painting-tools{
 	float: left;
 	margin: 0 0 20px 0;
 	padding: 0;
+	width: 250px;
 }
 
 .config dd {
@@ -18,6 +19,13 @@
 	width: 50px;
 }
 
+.output {
+	border: 1px solid #000;
+	float: left;
+	height: 120px;
+	resize: none;
+	width: 250px;
+}
 
 .board {
 	border: 1px solid #000;
