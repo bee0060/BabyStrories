@@ -68,7 +68,6 @@ function exportInfo() {
 		width = txtWidth.val(),
 		height = txtHeight.val(),
 		size = txtSize.val(),
-		count = width * height,
 		infoArr = [],
 		result = width + '-' + height + '-' + size + ':';
 
@@ -82,6 +81,29 @@ function exportInfo() {
 	output.val(result);
 }
 
-function importInfo(str){
-	
+function importInfo() {
+	var output = $('.output'),
+		str = output.val(),
+		board = $('.board'),
+		txtWidth = $('#txtWidth'),
+		txtHeight = $('#txtHeight'),
+		txtSize = $('#txtSize'),
+		infoArr = str.split(':'),
+		sizeInfoArr = infoArr[0].split('-'),
+		width = sizeInfoArr[0],
+		height = sizeInfoArr[1],
+		size = sizeInfoArr[2],
+		contentInfo = infoArr[1].split(','),
+		count = width * height;
+
+	txtWidth.val(width);
+	txtHeight.val(height);
+	txtSize.val(size);
+	bootStrap();
+
+	board.find('span').each(function(i, o) {
+		if (contentInfo[i] == 1) {
+			o.className = "selected";
+		}
+	});
 }
