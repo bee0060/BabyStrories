@@ -72,10 +72,8 @@ function exportInfo() {
 		result = width + '-' + height + '-' + size + ':';
 
 	board.find('span').each(function(i, span) {
-		console.log(i, span);
 		infoArr.push(span.className ? 1 : 0);
 	});
-	console.log(infoArr.join());
 	result += infoArr.join();
 
 	output.val(result);
