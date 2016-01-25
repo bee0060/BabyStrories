@@ -1,34 +1,172 @@
+(function(global) {
+	var width, height, size, count, infoArr;
+
+
+
+})(window);
+
+
 var enablePen = false,
 	enableSelector = false,
 	usingPen = false;
 
+function initalBoard() {
+	var board = $('.board');
+	registerBoardEvents(board);
+}
+
+function registerBoardEvents(container) {
+	var $container = $(container);
+	$container.on('click', 'span', selectBlock);
+}
+
 function bootStrap() {
 	var board = $('.board'),
-		txtWidth = $('#txtWidth'),
-		txtHeight = $('#txtHeight'),
-		txtSize = $('#txtSize'),
-		width = txtWidth.val(),
-		height = txtHeight.val(),
-		size = txtSize.val(),
-		count = width * height,
-		frag = document.createDocumentFragment(),
-		span;
+		txtX = $('#txtX'),
+		txtY = $('#txtY'),
+		txtDimension = $('#txtDimension'),
+		x = txtX.val(),
+		y = txtY.val(),
+		dimension = txtDimension.val();
+
+	buildBoard(board[0], x, y, dimension);
+}
+
+function buildBoard(container, x, y, dimension, contentInfo) {
+	var count, frag, span;
+
+	if (!isInt(x) || !isInt(y) || !isInt(dimension)) {
+		throw new Error('Not valid x, y or dimension');
+	}
+
+	if (!container || !container.nodeType || container.nodeType !== 1) {
+		throw new Error('Could not find container when building board');
+	}
+
+	count = x * y;
+	frag = document.createDocumentFragment();
 
 	for (var i = 0; i < count; i++) {
-		span = document.createElement('span');
-		span.style.width = size + 'px';
-		span.style.height = size + 'px';
+		span = createBlock(dimension);
 		frag.appendChild(span);
 	}
 
-	board.hide();
-	board.html('');
-	board.css('width', size * width);
-	board.css('height', size * height);
-	board.append(frag);
-	board.show();
+	container.style.display = "none";
+	container.innerHTML = "";
+	container.appendChild(frag);
 
-	board.on('click', 'span', selectBlock);
+	container.style.width = dimension * x + 'px';
+	container.style.height = dimension * y + 'px';
+
+	if (contentInfo && contentInfo instanceof Array && contentInfo.length === count) {
+		fillBoardContent(container, contentInfo);
+	}
+
+	container.style.display = "";
+}
+
+
+function fillBoardContent(container, contentInfo) {
+	var spans;
+
+	if (!container || !container.nodeType || container.nodeType !== 1) {
+		throw new Error('Could not find container when building board');
+	}
+
+	if (!contentInfo || !(contentInfo instanceof Array) || !contentInfo.length) {
+		throw new Error('Invalid content info.');
+	}
+
+	spans = container.childNodes;
+
+	if (spans.length !== contentInfo.length) {
+		throw new Error('The length of content info does not match the span count of board.');
+	}
+
+	for (var i = 0, len = spans.length; i < len; i++) {
+		if (contentInfo[i] == 1) {
+			spans[i].className = "selected";
+		}
+	}
+}
+
+function exportInfo() {
+	var board = $('.board'),
+		spans = board.find('span'),
+		txtX = $('#txtX'),
+		txtY = $('#txtY'),
+		txtDimension = $('#txtDimension'),
+		txaOutput = $('.output'),
+		x = txtX.val(),
+		y = txtY.val(),
+		dimension = txtDimension.val(),
+		contentInfo = [];
+
+	spans.each(function(i, span) {
+		contentInfo.push(span.className ? 1 : 0);
+	});
+	result = generateExportStr(x, y, dimension, contentInfo);
+
+	txaOutput.val(result);
+}
+
+function importInfo() {
+	var txaOutput = $('.output'),
+		str = txaOutput.val(),
+		fullBoardInfo = analyzeImportStr(str),
+		board = $('.board'),
+		txtX = $('#txtX'),
+		txtY = $('#txtY'),
+		txtDimension = $('#txtDimension');
+
+	txtX.val(fullBoardInfo.x);
+	txtY.val(fullBoardInfo.y);
+	txtDimension.val(fullBoardInfo.dimension);
+
+	buildBoard(board[0], fullBoardInfo.x, fullBoardInfo.y, fullBoardInfo.dimension, fullBoardInfo.contentInfo);
+}
+
+function importByZippedStr(board, str) {
+	var fullBoardInfo = analyzeImportStr(str);
+	buildBoard($(board)[0], fullBoardInfo.x, fullBoardInfo.y, fullBoardInfo.dimension, fullBoardInfo.contentInfo);
+}
+
+function generateExportStr(x, y, dimension, contentInfo) {
+	if (!isInt(x) || !isInt(y) || !isInt(dimension)) {
+		throw new Error('Not valid x, y or dimension');
+	}
+
+	if (!contentInfo || !(contentInfo instanceof Array) || !contentInfo.length) {
+		throw new Error('Invalid content info.');
+	}
+
+	var count = x * y;
+
+	if (count !== contentInfo.length) {
+		throw new Error('The length of content info does not match the blockes\' count of board.');
+	}
+
+	return x + '-' + y + '-' + dimension + ':' + contentInfo.join('');
+}
+
+function analyzeImportStr(str) {
+	try {
+		var infoArr = str.split(':'),
+			dimensionInfoArr = infoArr[0].split('-'),
+			x = dimensionInfoArr[0],
+			y = dimensionInfoArr[1],
+			dimension = dimensionInfoArr[2],
+			contentInfo = infoArr[1].split('');
+
+		return {
+			x: x,
+			y: y,
+			dimension: dimension,
+			contentInfo: contentInfo
+		};
+	} catch (ex) {
+		throw new Error('Invalid import string format. Valid Format as: x-y-dimension:{contentInfoay.join()}');
+	}
 }
 
 function selectBlock(ev, select) {
@@ -59,49 +197,19 @@ function usePen(ev) {
 	});
 }
 
-function exportInfo() {
-	var board = $('.board'),
-		txtWidth = $('#txtWidth'),
-		txtHeight = $('#txtHeight'),
-		txtSize = $('#txtSize'),
-		output = $('.output'),
-		width = txtWidth.val(),
-		height = txtHeight.val(),
-		size = txtSize.val(),
-		infoArr = [],
-		result = width + '-' + height + '-' + size + ':';
+/*-------------------------- 基础公用方法 --------------------------*/
 
-	board.find('span').each(function(i, span) {
-		infoArr.push(span.className ? 1 : 0);
-	});
-	result += infoArr.join();
-
-	output.val(result);
+function isInt(n) {
+	return parseInt(n) == n;
 }
 
-function importInfo() {
-	var output = $('.output'),
-		str = output.val(),
-		board = $('.board'),
-		txtWidth = $('#txtWidth'),
-		txtHeight = $('#txtHeight'),
-		txtSize = $('#txtSize'),
-		infoArr = str.split(':'),
-		sizeInfoArr = infoArr[0].split('-'),
-		width = sizeInfoArr[0],
-		height = sizeInfoArr[1],
-		size = sizeInfoArr[2],
-		contentInfo = infoArr[1].split(','),
-		count = width * height;
+function createBlock(dimension) {
+	var span = $c('span');
+	span.style.width = dimension + 'px';
+	span.style.height = dimension + 'px';
+	return span;
+}
 
-	txtWidth.val(width);
-	txtHeight.val(height);
-	txtSize.val(size);
-	bootStrap();
-
-	board.find('span').each(function(i, o) {
-		if (contentInfo[i] == 1) {
-			o.className = "selected";
-		}
-	});
+function $c(tag) {
+	return document.createElement(tag);
 }

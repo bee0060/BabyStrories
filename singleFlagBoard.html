@@ -6,12 +6,12 @@
 
 	<link rel="stylesheet" type="text/css" href="css/singleFlagBoard.css">
 </head>
-<body>
+<body onload="initalBoard();">
 	<div class="control-panel">
 		<dl class="config">
 			<dt>Configuration</dt>
-			<dd>Size: <input id="txtWidth" type="tel">*<input id="txtHeight" type="tel"> </dd>
-			<dd>Block Size: <input id='txtSize' type="text"></dd>
+			<dd>Size: <input id="txtX" type="tel">*<input id="txtY" type="tel"> </dd>
+			<dd>Block Dimension: <input id='txtDimension' type="text"></dd>
 			<dd>Background-color: <input type="text"></dd>
 			<dd>
 				<button onclick="bootStrap();">Bootstrap</button>
@@ -27,6 +27,7 @@
 		</dl>
 
 		<textarea class="output"></textarea>
+		<a href="single-flag-using-test.html">Test using</a>
 	</div>
 
 	<div class="control-panel">
@@ -35,7 +36,7 @@
 		</div>
 	</div>
 	
-	<!--<script type="text/javascript" src="js/app/analysis.js"></script>-->
+	<script type="text/javascript" src="js/app/analysis.js"></script>
     <script type="text/javascript" src="js/lib/jquery-1.9.0.min.js"></script>
     <script type="text/javascript" src="js/app/singleFlagBoard.js"></script>
 </body>
