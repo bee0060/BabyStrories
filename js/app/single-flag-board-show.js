@@ -5,7 +5,6 @@
 
 
 	function importByZippedStr(board, str) {
-		console.log(board, str);
 		var fullBoardInfo = analyzeImportStr(str);
 		buildBoard(board, fullBoardInfo.x, fullBoardInfo.y, fullBoardInfo.dimension, fullBoardInfo.contentInfo);
 	}
@@ -82,7 +81,7 @@
 
 		for (var i = 0, len = spans.length; i < len; i++) {
 			if (contentInfo[i] == 1) {
-				spans[i].className = "selected";
+				spans[i].style.background = "gray";
 			}
 		}
 	}
