@@ -35,3 +35,9 @@
 	vertical-align:middle;
 	width:480px;
 }
+
+.mask-flag
+{
+	float: left;
+	margin-left: 10px;
+}
