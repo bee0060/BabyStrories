@@ -1,14 +1,5 @@
-(function(global) {
-	var width, height, size, count, infoArr;
-
-
-
-})(window);
-
-
-var enablePen = false,
-	enableSelector = false,
-	usingPen = false;
+var usingPaintingTool = "NONE",
+	enablePaintingTool = false;
 
 function initalBoard() {
 	var board = $('.board');
@@ -18,6 +9,14 @@ function initalBoard() {
 function registerBoardEvents(container) {
 	var $container = $(container);
 	$container.on('click', 'span', selectBlock);
+
+	$container.on('click', 'span', function(ev) {
+		enablePaintingTool = !enablePaintingTool;
+
+		if (usingPaintingTool !== "NONE") {
+			selectBlock.call(this, ev);
+		}
+	});
 }
 
 function bootStrap() {
@@ -97,21 +96,36 @@ function selectBlock(ev, select) {
 }
 
 function usePen(ev) {
-	enablePen = true;
-	enableSelector = false;
+	usingPaintingTool = "PEN";
+	enablePaintingTool = false;
 
-	$('.board').off('mousemove');
-
-	$('.board').on('click', 'span', function(ev) {
-		usingPen = !usingPen;
-		selectBlock.call(this, ev);
-	});
+	$('.board').off('mousemove', 'span');
 
 	$('.board').on('mousemove', 'span', function(ev) {
-		if (enablePen && usingPen) {
+		if (usingPaintingTool == "PEN" && enablePaintingTool) {
 			selectBlock.call(this, ev, true);
 		}
 	});
+}
+
+function useEraser(ev) {
+	usingPaintingTool = "ERASER";
+	enablePaintingTool = false;
+
+	$('.board').off('mousemove', 'span');
+
+	$('.board').on('mousemove', 'span', function(ev) {
+		if (usingPaintingTool == "ERASER" && enablePaintingTool) {
+			selectBlock.call(this, ev, false);
+		}
+	});
+}
+
+function clearPaintTool() {
+	usingPaintingTool = "NONE";
+	enablePaintingTool = false;
+
+	$('.board').off('mousemove', 'span');
 }
 
 function analyzeImportStr(str) {
