@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Single Flag Board</title>
+
+	<link rel="stylesheet" type="text/css" href="css/singleFlagBoard.css">
+</head>
+<body onload="initalBoard();">
+	<div class="control-panel">
+		<dl class="config">
+			<dt>Configuration</dt>
+			<dd>Size: <input id="txtX" type="tel">*<input id="txtY" type="tel"> </dd>
+			<dd>Block Dimension: <input id='txtDimension' type="text"></dd>
+			<dd>Background-color: <input type="text"></dd>
+			<dd>
+				<button onclick="bootStrap();">Bootstrap</button>
+				<button onclick="exportInfo();">Export</button>
+				<button onclick="importInfo();">Import</button>
+			</dd>
+		</dl>
+		
+		<dl class="painting-tools">
+			<dt>Painting Toos</dt>
+			<dd><input name="paint" type="radio" onclick="usePen()">Pen</dd>
+			<dd><input name="paint" type="radio">Selector</dd>
+		</dl>
+
+		<textarea class="output"></textarea>
+		<a href="single-flag-using-test.html">Test using</a>
+	</div>
+
+	<div class="control-panel">
+		<div class="board">
+			
+		</div>
+	</div>
+	
+	<!-- <script type="text/javascript" src="js/app/analysis.js"></script> -->
+    <script type="text/javascript" src="js/lib/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/app/single-flag-board-draw.js"></script>
+</body>
+</html>
