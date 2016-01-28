@@ -5,8 +5,13 @@
 
 
 	function importByZippedStr(board, str) {
-		var fullBoardInfo = analyzeImportStr(str);
-		buildBoard(board, fullBoardInfo.x, fullBoardInfo.y, fullBoardInfo.dimension, fullBoardInfo.contentInfo);
+		try {
+			var fullBoardInfo = analyzeImportStr(str);
+			buildBoard(board, fullBoardInfo.x, fullBoardInfo.y, fullBoardInfo.dimension, fullBoardInfo.contentInfo);
+		} catch (ex) {
+			console.error(ex.toString());
+			clearBoard(board);
+		}
 	}
 
 	function analyzeImportStr(str) {
@@ -27,6 +32,13 @@
 		} catch (ex) {
 			throw new Error('Invalid import string format. Valid Format as: x-y-dimension:{contentInfoay.join()}');
 		}
+	}
+
+	function clearBoard(container) {
+		if (!container || !container.nodeType || container.nodeType !== 1) {
+			throw new Error('Could not find container when building board');
+		}
+		container.innerHTML = "";
 	}
 
 	function buildBoard(container, x, y, dimension, contentInfo) {
