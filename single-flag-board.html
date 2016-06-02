@@ -12,8 +12,8 @@
 			<dt>Configuration</dt>
 			<dd>Size(x*y): <input id="txtX" type="tel">*<input id="txtY" type="tel"> </dd>
 			<dd>Block Dimension: <input id='txtDimension' type="text"></dd>
-			<dd>Border Width(px): <input id="txtBorderWidth" type="text"></dd>
-			<dd>Background-color: <input id="txtBacc" type="text"></dd>
+			<dd>Border Width(px): <input id="txtBorderWidth" type="text" value="1"></dd>
+			<dd>Background-color: <input id="txtBacc" type="text" value="gray"></dd>
 			<dd>
 				<button onclick="bootStrap();">Bootstrap</button>
 				<button onclick="exportInfo();">Export</button>
@@ -23,9 +23,9 @@
 		
 		<dl class="painting-tools">
 			<dt>Painting Toos</dt>
-			<dd><input name="paint" type="radio" onclick="usePen();">Pen</dd>
-			<dd><input name="paint" type="radio" onclick="useEraser();">Eraser</dd>
-			<dd><input name="paint" type="radio" onclick="clearPaintTool();" checked="checked">None</dd>
+			<dd><label><input name="paint" type="radio" onclick="usePen();">Pen</label></dd>
+			<dd><label><input name="paint" type="radio" onclick="useEraser();">Eraser</label></dd>
+			<dd><label><input name="paint" type="radio" onclick="clearPaintTool();" checked="checked">None</label></dd>
 		</dl>
 
 		<textarea class="output"></textarea>
