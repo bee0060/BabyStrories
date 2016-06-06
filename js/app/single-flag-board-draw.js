@@ -5,7 +5,7 @@
 
 	Algorithm Name	|	Suffix	|	Remark
 	0. Prefix		-	~		-	去掉0前缀，改压缩模式一共且默认会使用一次，在进行进制转换前需要执行
-	1. Coordinate	-	！		-	坐标, 语法： x.y[,x.y]{0,n}
+	1. Coordinate	-	！		-	坐标, 语法： x.y[,x.y]{0,n}, TODO 暂未实现
 	2. Mirror		-	@		-	镜面，将所有0变成1,1变成0.
 	3. Reversion	-	#		-	反转
 	4. 64bit		-	$		-	用64个字符形成64进制压缩
@@ -116,8 +116,8 @@ function getBoardDetailInfo() {
 	};
 }
 
-
-// 1. Coordinate	-	！		-	坐标, 语法： x.y[,x.y]{0,n}
+// 0. Prefix		-	~		-	去掉0前缀，改压缩模式一共且默认会使用一次，在进行进制转换前需要执行
+// 1. Coordinate	-	！		-	坐标, 语法： x.y[,x.y]{0,n}, TODO 暂未实现
 // 2. Mirror		-	@		-	镜面
 // 3. Reversion		-	#		-	反转
 // 4. 64bit			-	$		-	用64个字符形成64进制压缩
@@ -129,59 +129,109 @@ var CHARS_SET_OF_64_BIT = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0
 
 /*
 	1. 计算开头和结尾的连续相同的字符数量，并以此决定是否使用镜面、反转和去前缀以及使用前缀。
-	2. 
+	2. 选择性使用镜面和反转压缩
+	3. 去掉连续0前缀
+	4. 使用64进制压缩
  */
 function zipMainControl(originChars, x, y) {
-	var consecutiveCharsReg = /(^0+)|(^1+)|(1+$)|(0+$)/,
-		mc = originChars.join('').match(continueCharsReg),
-		maxConsecutiveCharsLength = 0,
-		maxLengthMatch = '',
-		needMirrored = false,
-		needReversioned = false,
-		hasMirrored = false,
-		hasReversioned = false,
-		zipType = [];
+	var sourceChars = getCharsArray(originChars),
+		zipTypes = zipTypesAnalysis(sourceChars),
+		zippedChars = runZippingByTypes(sourceChars, zipTypes);
 
-
-	mc.map(function(m) {
-		var lenOfMatch = typeof m === 'undefined' ? 0 : m.length;
-		if (lenOfMatch > maxConsecutiveCharsLength) {
-			maxConsecutiveCharsLength = lenOfMatch;
-			maxLengthMatch = m;
-		}
-	});
-
-
-	if (mc[1] === maxLengthMatch) {
-
-
-	} else if (mc[2] === maxLengthMatch) {
-
-	} else if (mc[3] === maxLengthMatch) {
-
-	} else if (mc[4] === maxLengthMatch) {
-
-	}
-
-
-
-	var originClearedPrefix = removeZeroPrefix(originChars),
-		mirrorResult = removeZeroPrefix(zipMirror(originChars)),
-		reversionResult = removeZeroPrefix(zipReversion(originChars)),
-		needMirrored = false,
-		needReversioned = false,
-		hasMirrored = false,
-		hasReversioned = false,
-		zipType = [];
-
-	if (originClearedPrefix.length < Math.min(mirrorResult.length, reversionResult.length)) {
-
-	}
-
-
-
+	return {
+		zippedChars: zippedChars,
+		zipTypes: zipTypes
+	};
 }
 
+function zipTypesAnalysis(originChars) {
+	var zipType = null,
+		sourceChars = getCharsArray(originChars),
+		sourceString = sourceChars.join(''),
+		zeroPrefixReg = /(^0+)/,
+		zeroSuffixReg = /(0+$)/,
+		onePrefixReg = /(^1+)/,
+		oneSuffixReg = /(1+$)/,
+		zeroPrefixMatch = sourceString.match(zeroPrefixReg),
+		zeroSuffixMatch = sourceString.match(zeroSuffixReg),
+		onePrefixMatch = sourceString.match(onePrefixReg),
+		oneSuffixMatch = sourceString.match(oneSuffixReg),
+		zeroPrefixLength = !!zeroPrefixMatch ? zeroPrefixMatch[0].length : 0,
+		zeroSuffixLength = !!zeroSuffixMatch ? zeroSuffixMatch[0].length : 0,
+		onePrefixLength = !!onePrefixMatch ? onePrefixMatch[0].length : 0,
+		oneSuffixLength = !!oneSuffixMatch ? oneSuffixMatch[0].length : 0,
+		maxMatchLength = Math.max(zeroPrefixLength, zeroSuffixLength, onePrefixLength, oneSuffixLength);
+
+	// 连续0前缀最长，不需要镜面和反转
+	if (zeroPrefixLength === maxMatchLength) {
+		zipType = [];
+	}
+	// 连续0后缀最长，需要反转压缩	
+	else if (zeroSuffixLength === maxMatchLength) {
+		zipType = ['#'];
+	}
+	// 连续1前缀最长，需要镜面压缩
+	else if (onePrefixLength === maxMatchLength) {
+		zipType = ['@'];
+	}
+	// 连续1后缀最长，需要镜面+反转压缩
+	else if (oneSuffixLength === maxMatchLength) {
+		zipType = ['@#'];
+	}
+
+	// 去掉连续0前缀
+	zipType.push('~');
+
+	// 64位压缩
+	zipType.push('$');
+
+	return zipType;
+}
+
+
+// TODO 20160606
+function runZippingByTypes(originChars, zipTypes) {
+	var sourceChars = getCharsArray(originChars),
+		zippedChars = sourceChars.slice();
+
+	if (!zipTypes || !zipTypes.length) {
+		return sourceChars;
+	}
+
+	zipTypes.map(function(type) {
+		switch (type) {
+			case '~':
+				// Prefix
+				zippedChars = removeZeroPrefix(zippedChars);
+				break;
+
+			case '@':
+				// Mirror
+				zippedChars = zipMirror(zippedChars);
+				break;
+
+			case '#':
+				// Reversion
+				zippedChars = zipReversion(zippedChars);
+				break;
+
+			case '$':
+				// 64 bit
+				zippedChars = zip64Bit(zippedChars);
+				break;
+
+			case '%':
+				// 16 bit - TODO
+				break;
+			default:
+				break;
+		}
+	});
+	return zippedChars;
+}
+
+
+// TODO 暂未实现
 function zipCoordinate(origin, x, y) {
 
 }
@@ -208,7 +258,7 @@ function zipReversion(originChars) {
 }
 
 function zip64Bit(originChars) {
-	if (!isIn2Bit(originChars.join(''))) {
+	if (!isIn2Bit(originChars)) {
 		throw new Error('Input text is not in 2 bit.');
 	}
 
@@ -225,7 +275,7 @@ function zip64Bit(originChars) {
 		temp64BitChar.push(chr);
 		counter++
 
-		if (counter % 4 === 0) {
+		if (counter % 6 === 0) {
 			zipped.push(zipOneCharFrom2BitTo64Bit(temp64BitChar.join('')));
 
 			temp64BitChar = [];
@@ -256,15 +306,35 @@ function buildAllZeroCharArray(length) {
 }
 
 function removeZeroPrefix(originChars) {
-	var chars = typeof originChars === 'string' ? originChars.split('') : originChars,
+
+	console.log('removeZeroPrefix origin', originChars.length, originChars);
+	var chars = getCharsArray(originChars),
 		clone = chars.slice(),
 		originStr = clone.join(''),
 		prefixZeroReg = /^0*/,
 		strWithoutZeroPrefix = originStr.replace(prefixZeroReg, ''),
 		result = strWithoutZeroPrefix.split('');
-
+	console.log('removeZeroPrefix dest', strWithoutZeroPrefix.length, strWithoutZeroPrefix);
 	return result;
 }
+
+function getCharsArray(originChars) {
+	if (originChars && originChars instanceof Array) {
+		return originChars;
+	} else if (typeof originChars === 'string') {
+		return originChars.split('');
+	} else {
+		return [];
+	}
+}
+
+function combineZippedInfoIntoString(zippedInfo) {
+	var zippedChars = zippedInfo.zippedChars || [],
+		zipTypes = zippedInfo.zipTypes || [];
+
+	return zippedChars.join('') + (zipTypes.length ? ('|' + zipTypes.join('')) : '');
+}
+
 
 function generateExportStr(options) {
 	var x = options.x,
@@ -272,11 +342,13 @@ function generateExportStr(options) {
 		borderWidth = (options.borderWidth || '1'),
 		dimension = options.dimension,
 		bacc = options.bacc || 'gray', // background-color
-		contentInfo = options.contentInfo;
+		contentInfo = options.contentInfo,
+		zippedInfo = zipMainControl(contentInfo),
+		zippedString = combineZippedInfoIntoString(zippedInfo);
 
 	checkOptionAttrsFormatValid(options);
 
-	return x + '-' + y + '-' + dimension + '-' + borderWidth + '-' + bacc + ':' + contentInfo.join('');
+	return x + '-' + y + '-' + dimension + '-' + borderWidth + '-' + bacc + ':' + zippedString;
 }
 
 function checkOptionAttrsFormatValid(options) {
@@ -457,21 +529,4 @@ function fillBoardContent(container, contentInfo) {
 			spans[i].className = "selected";
 		}
 	}
-}
-
-/*-------------------------- 基础公用方法 --------------------------*/
-
-function isInt(n) {
-	return parseInt(n) == n;
-}
-
-function createBlock(dimension) {
-	var span = $c('span');
-	span.style.width = dimension + 'px';
-	span.style.height = dimension + 'px';
-	return span;
-}
-
-function $c(tag) {
-	return document.createElement(tag);
 }

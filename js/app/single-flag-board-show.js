@@ -98,12 +98,7 @@
 		}
 	}
 
-	/*-------------------------- 基础公用方法 --------------------------*/
-
-	function isInt(n) {
-		return parseInt(n) == n;
-	}
-
+	/*-------------------------- 基础公用方法 start --------------------------*/
 	function createBlock(dimension) {
 		var span = $c('span');
 		span.style.width = dimension + 'px';
@@ -117,10 +112,7 @@
 		span.style.padding = '0';
 		return span;
 	}
-
-	function $c(tag) {
-		return document.createElement(tag);
-	}
+	/*-------------------------- 基础公用方法 end  --------------------------*/
 
 	global.importByZippedStr = importByZippedStr;
 
