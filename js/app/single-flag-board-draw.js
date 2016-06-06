@@ -125,8 +125,6 @@ function getBoardDetailInfo() {
 
 var CHARS_SET_OF_64_BIT = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
-
-
 /*
 	1. 计算开头和结尾的连续相同的字符数量，并以此决定是否使用镜面、反转和去前缀以及使用前缀。
 	2. 选择性使用镜面和反转压缩
@@ -297,14 +295,6 @@ function isIn2Bit(originChars) {
 	return /^[01]+$/.test(originChars.join(''));
 }
 
-function buildAllZeroCharArray(length) {
-	return Array.apply(null, {
-		length: length
-	}).map(function() {
-		return 0;
-	}, Number);
-}
-
 function removeZeroPrefix(originChars) {
 
 	console.log('removeZeroPrefix origin', originChars.length, originChars);
@@ -317,6 +307,26 @@ function removeZeroPrefix(originChars) {
 	console.log('removeZeroPrefix dest', strWithoutZeroPrefix.length, strWithoutZeroPrefix);
 	return result;
 }
+
+function unzipMainControl(zippedString, x, y) {
+	var zippedInfo = zippedString.split('|'),
+		zippedChars = zippedInfo[0].split(''),
+		zipTypes = zippedInfo.length > 1 ? zippedInfo[1].split('') : [],
+		originChars = [];
+
+
+	return '';
+}
+
+function buildAllZeroCharArray(length) {
+	return Array.apply(null, {
+		length: length
+	}).map(function() {
+		return 0;
+	}, Number);
+}
+
+
 
 function getCharsArray(originChars) {
 	if (originChars && originChars instanceof Array) {
