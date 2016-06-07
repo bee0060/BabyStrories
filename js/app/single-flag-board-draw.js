@@ -48,16 +48,24 @@ function importInfo() {
 	var txaOutput = $('.output'),
 		str = txaOutput.val(),
 		fullBoardInfo = analyzeImportStr(str),
-		board = $('.board'),
-		txtX = $('#txtX'),
-		txtY = $('#txtY'),
-		txtDimension = $('#txtDimension');
-
-	txtX.val(fullBoardInfo.x);
-	txtY.val(fullBoardInfo.y);
-	txtDimension.val(fullBoardInfo.dimension);
+		board = $('.board');
 
 	buildBoard(board[0], fullBoardInfo);
+	bindBoardInfo(fullBoardInfo);
+}
+
+function bindBoardInfo(boardInfo) {
+	var txtX = $('#txtX'),
+		txtY = $('#txtY'),
+		txtDimension = $('#txtDimension'),
+		txtBorderWidth = $('#txtBorderWidth'),
+		txtBacc = $('#txtBacc');
+
+	txtX.val(boardInfo.x);
+	txtY.val(boardInfo.y);
+	txtDimension.val(boardInfo.dimension);
+	txtBorderWidth.val(boardInfo.borderWidth);
+	txtBacc.val(boardInfo.bacc);
 }
 
 function getBoardDetailInfo() {
@@ -228,7 +236,9 @@ function buildBoard(container, options) {
 
 	container.style.display = "none";
 	container.innerHTML = "";
+	container.className = "board";
 	container.appendChild(frag);
+
 
 	container.style.width = dimension * x + 'px';
 	container.style.height = dimension * y + 'px';
@@ -248,7 +258,17 @@ function insertBoardStyle(borderWidth, backgroundColor) {
 		cssText = [];
 
 	cssText.push(
-		'.board span { border-width: ', borderWidth, 'px!important; }',
+		'.board { border: 1px solid #000; float: left; margin-left: 30px; }',
+		'.board span {',
+			' background-color: #fff;',
+			' border: 1px solid #000;',
+			' border-width: ', borderWidth, 'px!important;',
+			' display: block;',
+			' box-sizing: border-box;',
+			' float:left;',
+			' margin: 0;',
+			' padding: 0; ',
+		'}',
 		'.board span.selected { background-color: ', backgroundColor, '!important; }'
 	);
 
