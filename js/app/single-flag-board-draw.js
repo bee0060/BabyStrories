@@ -167,6 +167,7 @@ function analyzeImportStr(str) {
 		};
 	} catch (ex) {
 		throw new Error('Invalid import string format. Valid Format as: x-y-dimension-borderWidth-bacc:{contentInfo.join(\'\')}[|{zipTypes.join(\'\')}]');
+		console.error(ex);
 	}
 }
 

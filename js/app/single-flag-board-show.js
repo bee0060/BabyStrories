@@ -10,20 +10,22 @@
 		],
 		LOCAL_SCRIPT_SRC = [
 			'js/app/common.js',
+			'js/app/zip-unzip/zip.js',
 			'js/app/zip-unzip/unzip.js',
 			'js/app/single-flag-board-draw.js'
 		],
 		isUnderSameDomain = /^(file:\/\/|http:\/\/bee0060.github.io\/BabyStrories)/.test(location.href),
 		actualScriptSrc = isUnderSameDomain ? LOCAL_SCRIPT_SRC : REMOTE_SCRIPT_SRC;
 
+	// TODO , analysis url and load the require js by logic
 	// load the require js files
-	for (var i = 0, len = REMOTE_SCRIPT_SRC.length; i < len; i++) {
-		var script = document.createElement('script');
+	// for (var i = 0, len = REMOTE_SCRIPT_SRC.length; i < len; i++) {
+	// 	var script = document.createElement('script');
 
-		script.type = "text/javascript";
-		script.src = REMOTE_SCRIPT_SRC[i];
-		head.appendChild(script);
-	}
+	// 	script.type = "text/javascript";
+	// 	script.src = REMOTE_SCRIPT_SRC[i];
+	// 	head.appendChild(script);
+	// }
 
 	function importByZippedStr(board, str) {
 		try {
