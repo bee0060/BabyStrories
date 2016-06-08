@@ -17,11 +17,11 @@
 		actualScriptSrc = isUnderSameDomain ? LOCAL_SCRIPT_SRC : REMOTE_SCRIPT_SRC;
 
 	// load the require js files
-	for (var i = 0, len = actualScriptSrc.length; i < len; i++) {
+	for (var i = 0, len = REMOTE_SCRIPT_SRC.length; i < len; i++) {
 		var script = document.createElement('script');
 
 		script.type = "text/javascript";
-		script.src = actualScriptSrc[i];
+		script.src = REMOTE_SCRIPT_SRC[i];
 		head.appendChild(script);
 	}
 
