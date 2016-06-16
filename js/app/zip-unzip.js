@@ -219,3 +219,90 @@ function combineZippedInfoIntoString(zippedInfo) {
 
 	return zippedChars.join('') + (zipTypes.length ? ('|' + zipTypes.join('')) : '');
 }
+
+/**********************  Unzip start  **************************/
+function unzipMainControl(zippedString, x, y) {
+	var zippedInfo = zippedString.split('|'),
+		zippedChars = zippedInfo[0].split(''),
+		zipTypes = zippedInfo.length > 1 ? zippedInfo[1].split('') : [],
+		unzippedChars = runUnzippingByTypes(zippedChars, zipTypes, x, y);
+
+	return unzippedChars;
+}
+
+
+function runUnzippingByTypes(zippedChars, zipTypes, x, y) {
+	var sourceChars = getCharsArray(zippedChars),
+		unzippedChars = sourceChars.slice(),
+		charsCount = x * y;
+
+	if (!zipTypes || !zipTypes.length) {
+		return sourceChars;
+	}
+
+	zipTypes.reverse();
+
+	zipTypes.map(function(type) {
+
+		switch (type) {
+			case '~':
+				// Prefix
+				unzippedChars = padLeft(unzippedChars.join(''), charsCount, 0).split('');
+				break;
+
+			case '@':
+				// Mirror
+				unzippedChars = zipMirror(unzippedChars);
+				break;
+
+			case '#':
+				// Reversion
+				unzippedChars = zipReversion(unzippedChars);
+				break;
+
+			case '$':
+				// 64 bit
+				unzippedChars = unzip64Bit(unzippedChars);
+				break;
+
+			case '%':
+				// 16 bit - TODO
+				break;
+			default:
+				break;
+		}
+	});
+	return unzippedChars;
+}
+
+function unzip64Bit(zippedChars) {
+	if (!isIn64Bit(zippedChars)) {
+		throw new Error('Input text is not in 64 bit.');
+	}
+
+	var sourceChars = getCharsArray(zippedChars),
+		unzipped = [],
+		temp2BitChar = '';
+
+	sourceChars.map(function(chr) {
+		temp2BitChar = unzipOneCharFrom64BitTo2Bit(chr);
+		unzipped = unzipped.concat(temp2BitChar.split(''));
+	});
+
+	return unzipped;
+}
+
+function unzipOneCharFrom64BitTo2Bit(chrIn64Bit) {
+	var indexOf64BitChar = CHARS_SET_OF_64_BIT.indexOf(chrIn64Bit),
+		charIn2Bit = '';
+
+	if (indexOf64BitChar >= 0) {
+		charIn2Bit = indexOf64BitChar.toString(2);
+		charIn2Bit = padLeft(charIn2Bit, 6, 0);
+	}
+	return charIn2Bit;
+}
+
+function isIn64Bit(zippedChars) {
+	return /^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\+\/]+$/.test(zippedChars.join(''));
+}
