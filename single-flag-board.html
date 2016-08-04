@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/singleFlagBoard.css">
 </head>
 <body onload="initalBoard();">
+	<p style="color: #AA3344; font-weight: bold;">Fill the textboxes by numbers and click "Bootstrap" button, then you will get the board which you could draw on it by left click on your mouse and move :)</p>
 	<div class="control-panel">
 		<dl class="config">
 			<dt>Configuration</dt>
@@ -23,9 +24,9 @@
 		
 		<dl class="painting-tools">
 			<dt>Painting Toos</dt>
-			<dd><label><input name="paint" type="radio" onclick="usePen();">Pen</label></dd>
+			<dd><label><input name="paint" type="radio" onclick="usePen();" checked="checked">Pen</label></dd>
 			<dd><label><input name="paint" type="radio" onclick="useEraser();">Eraser</label></dd>
-			<dd><label><input name="paint" type="radio" onclick="clearPaintTool();" checked="checked">None</label></dd>
+			<dd><label><input name="paint" type="radio" onclick="clearPaintTool();">None</label></dd>
 		</dl>
 
 		<textarea class="output"></textarea>
@@ -38,11 +39,16 @@
 			
 		</div>
 	</div>
+ 
 	
 	<script type="text/javascript" src="js/app/analysis.js"></script>
     <script type="text/javascript" src="js/lib/jquery-1.9.0.min.js"></script>
     <script type="text/javascript" src="js/app/common.js"></script>
     <script type="text/javascript" src="js/app/single-flag-board-manager.js"></script>
     <script type="text/javascript" src="js/app/zip-unzip.js"></script>
+
+    <script>
+    	usePen();
+    </script>
 </body>
 </html>
