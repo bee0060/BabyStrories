@@ -76,9 +76,9 @@ var storiesLoader = (function() {
     var setPrevButton = function(chapterCount, index, clickEvent) {
         var prevPage = $('#prevPage');
         if (index === 0) {
-            prevPage.hide();
+            prevPage.css('visibility', 'hidden');
         } else {
-            prevPage.show();
+            prevPage.css('visibility', 'visible');
             prevPage[0].onclick = clickEvent;
         }
     };

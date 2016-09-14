@@ -1,0 +1,71 @@
+var harvestCarrots = {
+    "name": { "cn": "拔萝卜", "en": "Harvest Carrots" },
+    "chapters": [
+        {
+            "number": 1,
+            "content": {
+                "cn": [
+                    "有一位老爷爷在地里种了个萝卜，他对萝卜说：“长吧，长吧，萝卜啊，长得结实啊！长吧，长吧，萝卜啊，长得大啊！”萝卜越长越大，大得不得了。"
+                ],
+                "en": []
+            },
+            "img": "",
+            "mosaics": "30-30-20-1-#DD1122:DgDgfCgGwZkgM4P9AIIA7AMIAeAEYD/wHwGQQB8MAYf0IAITMIAIf4YAIBAQAIB8QAIfsT4IZ4QAYOAwAT//QAcAAQAQAAT8wAAQAgAAYAgAAIBgAAIBAAAMDAAAGGAAACMAAA|~$"
+        },
+        {
+            "number": 2,
+            "content": {
+                "cn": [
+                     "老爷爷就去拔萝卜。他拉住萝卜的叶子，“嗨哟，嗨哟”拔不动。"
+                ],
+                "en": []
+            },
+            "img": "",
+            "mosaics": "50-50-15-1-brown:QAAAAAAAMD4AAAAAGBBAAAB4HAQQAABzDAF0AADwL/AhAAPgD/8PgAGAAd94gACAYE/74ABgBB4ICAAQAIb//gAEMDCgAYABBgQkAEAAwMAJgDAAIBAGIBQACAQ/ABmAAgH4AAwgAMPAAAY8ABeAAAMeA///4AGMA4AAD////QAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA|~$"
+        },
+        {
+            "number": 3,
+            "content": {
+                "cn": [
+                    "老爷爷就喊：“老奶奶，老奶奶，快来帮我拔萝卜！”老奶奶说：“唉！我来了，我来了。”老爷爷、老奶奶一起拔萝卜。“嗨哟，嗨哟”萝卜还是拔不出来。",
+                ],
+                "en": []
+            },
+            "img": "",
+            "mosaics": "60-30-15-1-lightblue:B//AAAAAA//IAAAAAB/gGMA/4AD/gAEDAAP/8wgAIBgBhgAYgAYEgHhAANAAQ8QEjAAHAAwAQAeAACAAgAQEIAACYAgCQEfgAHwAh+QHoQAOAAgAQAIQASAAgAQA+ABjgAQAQAiAAG4AQBwAiAAEIAf+AAiAAEIABqAA2AAEIABJAAYAAH4AHJgAAAAAYA8IwAAAAAAAgIcAAAAAAAAAA|#~$"
+        },
+        {
+            "number": 4,
+            "content": {
+                "cn": [
+                     " 老奶奶喊：“小姑娘，小姑娘，快来帮我们拔萝卜！”小姑娘说：“唉！我来了，我来了。”老爷爷、老奶奶、小姑娘一起拔萝卜。“嗨哟，嗨哟”萝卜还是拔不出来。",
+                ],
+                "en": []
+            },
+            "img": "",
+            "mosaics": "70-30-15-1-lightblue:RgAAAAAAAADDMAAAAAAAAAGJAAAAAAAAAAMsAAAcAAAAAASgA8DQAAAAABOAGYIgAAAAAH8AQgiAAAAAAwQDCCZgAAAAGBgMQOMAAPAAQCAfALAABkABAIAIfwAAEQAF4g//CAAAZAAQCAeAIAAA8ABjIPIDgAAPmACZgAw6AAAH4AIEAPCMAAA8AAwwBkYQAAGYABiAMRBAAAQf///////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA|~$"
+        },
+        {
+            "number": 5,
+            "content": {
+                "cn": [
+                     " 小姑娘就喊。“小黄狗，小黄狗，快来帮我们拔萝卜！”“汪汪汪！我来了，我来了。”老爷爷、老奶奶、小姑娘、小黄狗一起拔萝卜。“嗨哟，嗨哟”萝卜还是拔不出来。",
+                ],
+                "en": []
+            },
+            "img": "",
+            "mosaics": "70-30-15-1-lightgreen:HAAAAAAP////z//////kEBxADTACYYQRwEGAJYAJAiB8ARIA/4A8B4BOBMgGOwBADAHgMDAQTAfAIQfggEBB4HX4hAgCHQAAAXg/8PAIxAAAASAIAmAgEAAABIAwCICAYAAAHgFgIgMAgAAAAAzAyAf+AAAAACEBIAKQAAAAAMwHABpAAAAAAeAAAEkAAAAAAAAAByYAAAAAAAAAcIwAAAAAAAAAAhgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA|#~$"
+        },
+        {
+            "number": 6,
+            "content": {
+                "cn": [
+                     " 他们高高兴兴地把大萝卜抬回家去了。",
+                ],
+                "en": []
+            },
+            "img": "",
+            "mosaics": "70-30-15-1-darkred:A8AAAAAAAAAAceAAAAAAA//+AMAAAAAH+GEAAf/////4gIwAAACSAkA+A2AAAAPIDwBABgAAAD4gGAEAEAAAAY8AIAQAQAAAABgD4PgHgAAAAHgSwlwnwAAAARC9D5G5AAAABkKUUkS0AAAADwvReRJQAAAH//5EBE9AABgQAAf//4EAADiAAAAAA/wAAD4AAAAAABgAAAgQBAIAACAAACBAEAgAAIAAf4EAQCAAAgAAAgQBAMAACAAACBgGAYAAYAAD8DgMAAD+AAB4QAAAAfwAAAEBwAAB/AAAAAABgAf4AAAAAAAD//AAAAAA|#~$"
+        }
+    ]
+};
