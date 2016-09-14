@@ -1,0 +1,29 @@
+.control-panel{
+	float: left;
+	width: 250px;
+}
+
+.config, .painting-tools{
+	float: left;
+	margin: 0 0 20px 0;
+	padding: 0;
+	width: 250px;
+}
+
+.config dd {
+	list-style: none;
+	margin-left: 15px;
+	margin-bottom:5px;
+}
+
+.config dd input {
+	width: 50px;
+}
+
+.output {
+	border: 1px solid #000;
+	float: left;
+	height: 120px;
+	resize: none;
+	width: 250px;
+}
